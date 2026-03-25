@@ -1,10 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import rateLimit from "express-rate-limit";
 
 dotenv.config();
 
-const rateLimit = require("express-rate-limit");
 const app = express();
 
 const limiter = rateLimit({
