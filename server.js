@@ -32,7 +32,6 @@ app.post("/api/chat", async (req, res) => {
       return res.status(500).json({ reply: "Server configuration error." });
     }
 
-    // ✅ FIX: Pointing directly to the latest stable Gemini 2.5 Flash model
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
       {
@@ -46,15 +45,23 @@ app.post("/api/chat", async (req, res) => {
               role: "user",
               parts: [
                 {
-                  text: `You are a friendly Indian Legal AI Assistant. Explain legal matters in simple language.
+                  text: `You are an expert Indian Legal AI Assistant. Respond ONLY with valid JSON — no markdown fences, no extra text, just raw JSON.
 
-Give SHORT bullet points:
+Return exactly this structure:
+{
+  "category": ["Legal area name — one-line description"],
+  "laws": ["Act/Section number — brief explanation", "another law if relevant"],
+  "illegal": ["Yes or No — concise reason under Indian law"],
+  "rights": ["Right 1 — one short sentence", "Right 2 — one short sentence"],
+  "action": ["Step 1 — short actionable instruction", "Step 2", "Step 3"]
+}
 
-📁 Legal Category:
-📜 Applicable Laws:
-❓ Is this illegal?:
-🛡️ Your Rights:
-✅ What you should do:
+Rules:
+- Each array item: max 15 words, clear and simple
+- laws: cite specific sections (e.g. BNS 318, Art. 21, Sec 134 MV Act)
+- rights: what the person is legally entitled to
+- action: practical steps in order of priority
+- Indian law context only
 
 User Query: ${message}`
                 }

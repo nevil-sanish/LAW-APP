@@ -12,18 +12,25 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --bg:        #0b0d14;
-            --surface:   #12151f;
-            --card:      #181c2a;
-            --border:    #252a3d;
+            --bg:        #07080f;
+            --surface:   #0e1018;
+            --card:      #131725;
+            --card2:     #1a1f30;
+            --border:    #1e2440;
+            --border2:   #2a3055;
             --accent:    #6c63ff;
             --accent2:   #a78bfa;
+            --accent3:   #38bdf8;
             --gold:      #f5c842;
+            --green:     #4ade80;
+            --red:       #f87171;
+            --orange:    #fb923c;
             --text:      #e8eaf0;
-            --muted:     #7a82a0;
-            --user-bg:   #1e2340;
-            --ai-bg:     #181c2a;
-            --radius:    14px;
+            --muted:     #6b7494;
+            --user-bg:   #1a2050;
+            --ai-bg:     #131725;
+            --radius:    16px;
+            --radius-sm: 10px;
         }
 
         body {
@@ -34,6 +41,40 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            position: relative;
+        }
+
+        /* ─── Background Orbs ─── */
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        body::before {
+            width: 500px; height: 500px;
+            top: -150px; left: -150px;
+            background: radial-gradient(circle, rgba(108,99,255,0.12) 0%, transparent 70%);
+        }
+        body::after {
+            width: 400px; height: 400px;
+            bottom: -100px; right: -100px;
+            background: radial-gradient(circle, rgba(56,189,248,0.08) 0%, transparent 70%);
+        }
+
+        /* ─── Nav Tabs ─── */
+        #navTabs {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 0 28px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+            position: relative;
+            z-index: 10;
         }
 
         /* ─── Header ─── */
@@ -41,48 +82,55 @@
             display: flex;
             align-items: center;
             gap: 14px;
-            padding: 18px 28px;
+            padding: 16px 28px;
             background: var(--surface);
             border-bottom: 1px solid var(--border);
             flex-shrink: 0;
-            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 10;
         }
 
         .logo-icon {
-            width: 44px; height: 44px;
+            width: 42px; height: 42px;
             background: linear-gradient(135deg, var(--accent), var(--accent2));
             border-radius: 12px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 22px;
-            box-shadow: 0 0 20px rgba(108,99,255,0.4);
+            font-size: 20px;
+            box-shadow: 0 0 24px rgba(108,99,255,0.45), 0 0 60px rgba(108,99,255,0.15);
             flex-shrink: 0;
+            animation: logoGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes logoGlow {
+            0%,100% { box-shadow: 0 0 24px rgba(108,99,255,0.45), 0 0 60px rgba(108,99,255,0.15); }
+            50%      { box-shadow: 0 0 32px rgba(167,139,250,0.6), 0 0 80px rgba(108,99,255,0.25); }
         }
 
         .header-text h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.35rem;
+            font-size: 1.3rem;
             line-height: 1.2;
-            background: linear-gradient(135deg, #fff 40%, var(--accent2));
+            background: linear-gradient(135deg, #fff 30%, var(--accent2));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .header-text p {
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             color: var(--muted);
-            letter-spacing: 0.05em;
+            letter-spacing: 0.06em;
             text-transform: uppercase;
         }
 
         .status-dot {
             margin-left: auto;
             display: flex; align-items: center; gap: 7px;
-            font-size: 0.78rem; color: #4ade80;
+            font-size: 0.75rem; color: var(--green);
         }
 
         .status-dot span {
             width: 8px; height: 8px; border-radius: 50%;
-            background: #4ade80;
+            background: var(--green);
             animation: pulse 2s infinite;
         }
 
@@ -91,6 +139,40 @@
             50%      { box-shadow: 0 0 0 6px rgba(74,222,128,0); }
         }
 
+        /* ─── Tab Navigation ─── */
+        .tab-btn {
+            padding: 14px 20px;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            color: var(--muted);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            letter-spacing: 0.03em;
+            transition: color 0.2s, border-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            white-space: nowrap;
+        }
+
+        .tab-btn.active {
+            color: var(--accent2);
+            border-bottom-color: var(--accent2);
+        }
+
+        .tab-btn:hover:not(.active) {
+            color: var(--text);
+        }
+
+        .tab-icon { font-size: 1rem; }
+
+        /* ─── Views ─── */
+        .view { display: none; flex: 1; overflow: hidden; flex-direction: column; position: relative; z-index: 1; }
+        .view.active { display: flex; }
+
         /* ─── Chat Area ─── */
         #chat {
             flex: 1;
@@ -98,193 +180,293 @@
             padding: 28px 20px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 22px;
             scroll-behavior: smooth;
         }
 
-        #chat::-webkit-scrollbar { width: 5px; }
+        #chat::-webkit-scrollbar { width: 4px; }
         #chat::-webkit-scrollbar-track { background: transparent; }
-        #chat::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+        #chat::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
 
         /* ─── Welcome card ─── */
         .welcome {
             text-align: center;
             padding: 40px 20px 20px;
-            animation: fadeUp .5s ease;
+            animation: fadeUp .6s cubic-bezier(.22,1,.36,1);
         }
 
         .welcome .shield {
-            font-size: 3rem;
-            margin-bottom: 12px;
-            filter: drop-shadow(0 0 18px rgba(245,200,66,.5));
+            font-size: 3.2rem;
+            margin-bottom: 14px;
+            filter: drop-shadow(0 0 22px rgba(245,200,66,.5));
+            display: inline-block;
+            animation: floatShield 4s ease-in-out infinite;
+        }
+
+        @keyframes floatShield {
+            0%,100% { transform: translateY(0); }
+            50%      { transform: translateY(-8px); }
         }
 
         .welcome h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #fff, var(--accent2));
+            font-size: 1.65rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fff 30%, var(--accent2) 70%, var(--accent3));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .welcome p { color: var(--muted); font-size: 0.9rem; max-width: 400px; margin: 0 auto 24px; }
+        .welcome p { color: var(--muted); font-size: 0.88rem; max-width: 420px; margin: 0 auto 28px; line-height: 1.7; }
 
         .chips {
-            display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+            display: flex; flex-wrap: wrap; gap: 9px; justify-content: center;
         }
 
         .chip {
             background: var(--card);
-            border: 1px solid var(--border);
+            border: 1px solid var(--border2);
             border-radius: 50px;
             padding: 8px 16px;
-            font-size: 0.8rem;
+            font-size: 0.79rem;
             cursor: pointer;
             color: var(--text);
-            transition: all .2s;
+            transition: all .25s cubic-bezier(.22,1,.36,1);
+            backdrop-filter: blur(8px);
         }
 
         .chip:hover {
-            background: var(--accent);
+            background: rgba(108,99,255,0.2);
             border-color: var(--accent);
-            color: #fff;
-            transform: translateY(-1px);
+            color: var(--accent2);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(108,99,255,0.2);
         }
 
         /* ─── Message bubbles ─── */
         .msg {
             display: flex;
             gap: 12px;
-            max-width: 820px;
+            max-width: 860px;
             width: 100%;
             margin: 0 auto;
-            animation: fadeUp .35s ease;
+            animation: fadeUp .4s cubic-bezier(.22,1,.36,1);
         }
 
         .msg.user { flex-direction: row-reverse; }
 
         .avatar {
-            width: 36px; height: 36px; border-radius: 50%;
+            width: 34px; height: 34px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 16px; flex-shrink: 0;
+            font-size: 15px; flex-shrink: 0;
         }
 
         .msg.user  .avatar { background: linear-gradient(135deg, var(--accent), var(--accent2)); }
-        .msg.ai    .avatar { background: linear-gradient(135deg, #1f2a50, #2a1f50); border: 1px solid var(--border); }
+        .msg.ai    .avatar {
+            background: linear-gradient(135deg, #1a2050, #2a1f50);
+            border: 1px solid var(--border2);
+            box-shadow: 0 0 12px rgba(108,99,255,0.2);
+        }
 
         .bubble {
             padding: 14px 18px;
             border-radius: var(--radius);
-            font-size: 0.92rem;
+            font-size: 0.91rem;
             line-height: 1.65;
-            max-width: calc(100% - 60px);
+            max-width: calc(100% - 56px);
         }
 
         .msg.user .bubble {
             background: var(--user-bg);
-            border: 1px solid #2e3560;
+            border: 1px solid rgba(108,99,255,0.3);
             border-top-right-radius: 4px;
             color: var(--text);
+            backdrop-filter: blur(8px);
         }
 
         .msg.ai .bubble {
             background: var(--ai-bg);
             border: 1px solid var(--border);
             border-top-left-radius: 4px;
+            width: 100%;
+            padding: 0;
+            overflow: hidden;
         }
 
-        /* ─── AI Response Sections ─── */
-        .section-block {
-            background: rgba(108,99,255,0.07);
-            border-left: 3px solid var(--accent);
-            border-radius: 8px;
-            padding: 10px 14px;
-            margin: 8px 0;
+        /* ─── AI Response Structured Sections ─── */
+        .ai-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
         }
 
-        .section-block .label {
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--accent2);
-            margin-bottom: 4px;
-        }
-
-        .section-block .value {
-            color: var(--text);
-            font-size: 0.88rem;
-            line-height: 1.6;
-        }
-
-        .bullet-list {
-            margin: 6px 0 0 0;
-            padding-left: 18px;
-            list-style: none;
-        }
-
-        .bullet-list li {
+        .ai-section {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border);
             position: relative;
-            padding-left: 18px;
-            margin-bottom: 5px;
+            opacity: 0;
+            animation: sectionReveal .4s cubic-bezier(.22,1,.36,1) forwards;
+        }
+
+        .ai-section:last-child { border-bottom: none; }
+
+        @keyframes sectionReveal {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .ai-section:nth-child(1) { animation-delay: .05s; }
+        .ai-section:nth-child(2) { animation-delay: .15s; }
+        .ai-section:nth-child(3) { animation-delay: .25s; }
+        .ai-section:nth-child(4) { animation-delay: .35s; }
+        .ai-section:nth-child(5) { animation-delay: .45s; }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .section-icon {
+            width: 28px; height: 28px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* Section color themes */
+        .section-category .section-icon { background: rgba(108,99,255,0.15); }
+        .section-category .section-label { color: var(--accent2); }
+        .section-category { border-left: 3px solid var(--accent); }
+
+        .section-laws .section-icon { background: rgba(245,200,66,0.12); }
+        .section-laws .section-label { color: var(--gold); }
+        .section-laws { border-left: 3px solid var(--gold); }
+
+        .section-illegal .section-icon { background: rgba(248,113,113,0.12); }
+        .section-illegal .section-label { color: var(--red); }
+        .section-illegal { border-left: 3px solid var(--red); }
+
+        .section-rights .section-icon { background: rgba(74,222,128,0.1); }
+        .section-rights .section-label { color: var(--green); }
+        .section-rights { border-left: 3px solid var(--green); }
+
+        .section-action .section-icon { background: rgba(56,189,248,0.1); }
+        .section-action .section-label { color: var(--accent3); }
+        .section-action { border-left: 3px solid var(--accent3); }
+
+        /* Bullet list inside sections */
+        .s-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .s-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
             font-size: 0.88rem;
             line-height: 1.55;
             color: var(--text);
         }
 
-        .bullet-list li::before {
-            content: '▸';
-            position: absolute;
-            left: 0;
-            color: var(--accent2);
-            font-size: 0.8rem;
+        .s-list li::before {
+            content: '';
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            margin-top: 6px;
+            flex-shrink: 0;
+            opacity: 0.7;
+        }
+
+        .section-category .s-list li::before { color: var(--accent2); }
+        .section-laws .s-list li::before     { color: var(--gold); }
+        .section-illegal .s-list li::before  { color: var(--red); }
+        .section-rights .s-list li::before   { color: var(--green); }
+        .section-action .s-list li::before   { color: var(--accent3); }
+
+        .section-value {
+            font-size: 0.88rem;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        /* Inline text (single line answer) */
+        .inline-val {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.88rem;
+            font-weight: 500;
+        }
+
+        /* Fallback plain bubble */
+        .plain-bubble {
+            padding: 14px 18px;
+            font-size: 0.9rem;
+            line-height: 1.65;
         }
 
         /* ─── Typing indicator ─── */
         .typing {
             display: flex; gap: 5px; align-items: center;
-            padding: 14px 18px;
+            padding: 18px 18px;
         }
 
         .typing span {
-            width: 8px; height: 8px; border-radius: 50%;
+            width: 7px; height: 7px; border-radius: 50%;
             background: var(--accent2);
             animation: bounce .9s infinite;
         }
 
-        .typing span:nth-child(2) { animation-delay: .15s; }
-        .typing span:nth-child(3) { animation-delay: .30s; }
+        .typing span:nth-child(2) { animation-delay: .15s; background: var(--accent); }
+        .typing span:nth-child(3) { animation-delay: .30s; background: var(--accent3); }
 
         @keyframes bounce {
-            0%,60%,100% { transform: translateY(0); }
-            30%          { transform: translateY(-8px); }
+            0%,60%,100% { transform: translateY(0); opacity: 0.6; }
+            30%          { transform: translateY(-9px); opacity: 1; }
         }
 
         /* ─── Footer Input ─── */
         footer {
-            padding: 16px 20px;
+            padding: 14px 20px;
             background: var(--surface);
             border-top: 1px solid var(--border);
             flex-shrink: 0;
+            position: relative;
+            z-index: 10;
         }
 
         .input-row {
             display: flex;
             align-items: flex-end;
-            gap: 12px;
-            max-width: 820px;
+            gap: 10px;
+            max-width: 860px;
             margin: 0 auto;
             background: var(--card);
-            border: 1px solid var(--border);
+            border: 1px solid var(--border2);
             border-radius: var(--radius);
-            padding: 10px 14px;
-            transition: border-color .2s;
+            padding: 10px 12px;
+            transition: border-color .25s, box-shadow .25s;
         }
 
         .input-row:focus-within {
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(108,99,255,0.15);
+            box-shadow: 0 0 0 3px rgba(108,99,255,0.12), 0 0 30px rgba(108,99,255,0.08);
         }
 
         #userInput {
@@ -293,48 +475,251 @@
             border: none;
             color: var(--text);
             font-family: 'Inter', sans-serif;
-            font-size: 0.92rem;
+            font-size: 0.91rem;
             resize: none;
             outline: none;
             max-height: 140px;
-            min-height: 28px;
+            min-height: 26px;
             line-height: 1.5;
         }
 
         #userInput::placeholder { color: var(--muted); }
 
         #sendBtn {
-            width: 40px; height: 40px;
+            width: 38px; height: 38px;
             background: linear-gradient(135deg, var(--accent), var(--accent2));
             border: none; border-radius: 10px;
             color: #fff; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
             flex-shrink: 0;
-            transition: transform .15s, opacity .15s;
-            font-size: 16px;
+            transition: transform .15s, box-shadow .15s, opacity .15s;
+            font-size: 15px;
         }
 
-        #sendBtn:hover  { transform: scale(1.08); }
-        #sendBtn:active { transform: scale(.96); opacity: .85; }
-        #sendBtn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+        #sendBtn:hover  {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(108,99,255,0.4);
+        }
+        #sendBtn:active { transform: scale(.93); opacity: .85; }
+        #sendBtn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
 
         .footer-meta {
             text-align: center;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             color: var(--muted);
             margin-top: 8px;
         }
 
+        /* ─── Law Library Section ─── */
+        #lawView {
+            overflow-y: auto;
+            padding: 28px 20px;
+        }
+
+        #lawView::-webkit-scrollbar { width: 4px; }
+        #lawView::-webkit-scrollbar-track { background: transparent; }
+        #lawView::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+
+        .law-library-header {
+            max-width: 900px;
+            margin: 0 auto 28px;
+            text-align: center;
+            animation: fadeUp .5s ease;
+        }
+
+        .law-library-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.55rem;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff 30%, var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .law-library-header p {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        /* Search bar in law library */
+        .law-search-bar {
+            max-width: 900px;
+            margin: 0 auto 26px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--card);
+            border: 1px solid var(--border2);
+            border-radius: var(--radius);
+            padding: 10px 16px;
+            transition: border-color .25s, box-shadow .25s;
+            animation: fadeUp .5s ease .1s both;
+        }
+
+        .law-search-bar:focus-within {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(245,200,66,0.1);
+        }
+
+        .law-search-bar input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .law-search-bar input::placeholder { color: var(--muted); }
+        .law-search-bar .search-icon { color: var(--muted); font-size: 1.1rem; }
+
+        /* Law categories grid */
+        .law-grid {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 14px;
+        }
+
+        .law-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            overflow: hidden;
+            transition: transform .25s cubic-bezier(.22,1,.36,1), border-color .25s, box-shadow .25s;
+            animation: fadeUp .5s ease both;
+        }
+
+        .law-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--border2);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+        }
+
+        .law-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 16px 12px;
+        }
+
+        .law-card-icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .law-card-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.3;
+        }
+
+        .law-card-subtitle {
+            font-size: 0.72rem;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        .law-card-toggle {
+            margin-left: auto;
+            color: var(--muted);
+            font-size: 1rem;
+            transition: transform .3s;
+        }
+
+        .law-card.open .law-card-toggle { transform: rotate(180deg); }
+
+        .law-card-body {
+            display: none;
+            padding: 0 16px 14px;
+            border-top: 1px solid var(--border);
+            margin-top: 0;
+        }
+
+        .law-card.open .law-card-body { display: block; }
+
+        .law-sections-list {
+            list-style: none;
+            margin: 12px 0 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .law-sections-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            font-size: 0.82rem;
+            line-height: 1.5;
+            color: var(--text);
+            padding: 5px 8px;
+            border-radius: 7px;
+            transition: background .2s;
+        }
+
+        .law-sections-list li:hover { background: var(--card2); }
+
+        .law-section-num {
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 1px 7px;
+            border-radius: 5px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .law-section-desc { color: var(--muted); }
+
+        /* Filter pills */
+        .law-filter-pills {
+            max-width: 900px;
+            margin: 0 auto 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            animation: fadeUp .5s ease .15s both;
+        }
+
+        .filter-pill {
+            padding: 6px 14px;
+            border-radius: 50px;
+            border: 1px solid var(--border2);
+            background: transparent;
+            color: var(--muted);
+            font-size: 0.78rem;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .filter-pill.active, .filter-pill:hover {
+            background: rgba(108,99,255,0.15);
+            border-color: var(--accent);
+            color: var(--accent2);
+        }
+
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(12px); }
             to   { opacity: 1; transform: translateY(0); }
         }
 
         /* ─── Responsive ─── */
         @media (max-width: 600px) {
-            header { padding: 14px 16px; }
-            #chat  { padding: 20px 12px; }
-            footer { padding: 12px; }
+            header { padding: 12px 16px; }
+            #navTabs { padding: 0 12px; }
+            #chat  { padding: 16px 12px; }
+            footer { padding: 10px 12px; }
+            #lawView { padding: 16px 12px; }
+            .law-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -350,158 +735,582 @@
     <div class="status-dot"><span></span> Online</div>
 </header>
 
-<!-- Chat -->
-<div id="chat">
-    <div class="welcome" id="welcomeCard">
-        <div class="shield">🛡️</div>
-        <h2>Know Your Rights</h2>
-        <p>Ask me anything about Indian law — from property disputes to consumer rights, labour laws, and more.</p>
-        <div class="chips">
-            <div class="chip" onclick="quickAsk(this)">Tenant rights 🏠</div>
-            <div class="chip" onclick="quickAsk(this)">FIR procedure 📋</div>
-            <div class="chip" onclick="quickAsk(this)">Consumer complaint 🛒</div>
-            <div class="chip" onclick="quickAsk(this)">Workplace harassment ⚠️</div>
-            <div class="chip" onclick="quickAsk(this)">Divorce process 💼</div>
-            <div class="chip" onclick="quickAsk(this)">RTI filing 📄</div>
+<!-- Nav Tabs -->
+<div id="navTabs">
+    <button class="tab-btn active" id="tabChat" onclick="switchTab('chat')">
+        <span class="tab-icon">💬</span> Ask LexAI
+    </button>
+    <button class="tab-btn" id="tabLaw" onclick="switchTab('law')">
+        <span class="tab-icon">📚</span> Learn Law
+    </button>
+</div>
+
+<!-- ── Chat View ── -->
+<div class="view active" id="chatView">
+    <div id="chat">
+        <div class="welcome" id="welcomeCard">
+            <div class="shield">🛡️</div>
+            <h2>Know Your Rights</h2>
+            <p>Ask me anything about Indian law — property disputes, consumer rights, labour laws, FIR procedures, and more.</p>
+            <div class="chips">
+                <div class="chip" onclick="quickAsk(this)">Tenant rights 🏠</div>
+                <div class="chip" onclick="quickAsk(this)">FIR procedure 📋</div>
+                <div class="chip" onclick="quickAsk(this)">Consumer complaint 🛒</div>
+                <div class="chip" onclick="quickAsk(this)">Workplace harassment ⚠️</div>
+                <div class="chip" onclick="quickAsk(this)">Divorce process 💼</div>
+                <div class="chip" onclick="quickAsk(this)">RTI filing 📄</div>
+                <div class="chip" onclick="quickAsk(this)">Motor accident claim 🚗</div>
+                <div class="chip" onclick="quickAsk(this)">Cyber crime complaint 💻</div>
+            </div>
         </div>
+    </div>
+
+    <!-- Footer Input -->
+    <footer>
+        <div class="input-row">
+            <textarea id="userInput" rows="1" placeholder="Describe your legal issue…" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+            <button id="sendBtn" onclick="sendMessage()" title="Send">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            </button>
+        </div>
+        <p class="footer-meta">⚠️ LexAI provides general legal information, not professional legal advice.</p>
+    </footer>
+</div>
+
+<!-- ── Law Library View ── -->
+<div class="view" id="lawView">
+    <div class="law-library-header">
+        <div style="font-size:2.5rem;margin-bottom:10px;filter:drop-shadow(0 0 16px rgba(245,200,66,.4))">📖</div>
+        <h2>Indian Law Library</h2>
+        <p>Explore major Indian laws, acts, and constitutional provisions</p>
+    </div>
+
+    <div class="law-search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="lawSearch" placeholder="Search laws, sections, acts…" oninput="filterLaws(this.value)" />
+    </div>
+
+    <div class="law-filter-pills">
+        <button class="filter-pill active" onclick="filterCategory('all', this)">All</button>
+        <button class="filter-pill" onclick="filterCategory('criminal', this)">Criminal</button>
+        <button class="filter-pill" onclick="filterCategory('civil', this)">Civil</button>
+        <button class="filter-pill" onclick="filterCategory('constitutional', this)">Constitutional</button>
+        <button class="filter-pill" onclick="filterCategory('traffic', this)">Traffic</button>
+        <button class="filter-pill" onclick="filterCategory('labour', this)">Labour</button>
+        <button class="filter-pill" onclick="filterCategory('consumer', this)">Consumer</button>
+        <button class="filter-pill" onclick="filterCategory('cyber', this)">Cyber</button>
+        <button class="filter-pill" onclick="filterCategory('property', this)">Property</button>
+    </div>
+
+    <div class="law-grid" id="lawGrid">
+        <!-- Cards injected by JS -->
     </div>
 </div>
 
-<!-- Footer -->
-<footer>
-    <div class="input-row">
-        <textarea id="userInput" rows="1" placeholder="Describe your legal issue…" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
-        <button id="sendBtn" onclick="sendMessage()" title="Send">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="22" y1="2" x2="11" y2="13"></line>
-                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-            </svg>
-        </button>
-    </div>
-    <p class="footer-meta">⚠️ LexAI provides general legal information, not professional legal advice.</p>
-</footer>
-
 <script>
-    const chat     = document.getElementById('chat');
-    const input    = document.getElementById('userInput');
-    const sendBtn  = document.getElementById('sendBtn');
+/* ═══════════════════════════════════════
+   TAB SWITCHING
+═══════════════════════════════════════ */
+function switchTab(tab) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tab === 'chat' ? 'chatView' : 'lawView').classList.add('active');
+    document.getElementById(tab === 'chat' ? 'tabChat' : 'tabLaw').classList.add('active');
+}
 
-    function autoResize(el) {
-        el.style.height = 'auto';
-        el.style.height = Math.min(el.scrollHeight, 140) + 'px';
+/* ═══════════════════════════════════════
+   CHAT LOGIC
+═══════════════════════════════════════ */
+const chat    = document.getElementById('chat');
+const input   = document.getElementById('userInput');
+const sendBtn = document.getElementById('sendBtn');
+
+function autoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 140) + 'px';
+}
+
+function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+
+function quickAsk(el) {
+    input.value = el.textContent.replace(/[🏠📋🛒⚠️💼📄🚗💻]/gu, '').trim();
+    autoResize(input);
+    sendMessage();
+}
+
+function appendMsg(role, content) {
+    const avatarEmoji = role === 'user' ? '👤' : '⚖️';
+    const div = document.createElement('div');
+    div.className = `msg ${role}`;
+
+    if (role === 'ai' && typeof content === 'object') {
+        div.innerHTML = `<div class="avatar">${avatarEmoji}</div>
+            <div class="bubble"><div class="ai-sections">${buildSections(content)}</div></div>`;
+    } else {
+        div.innerHTML = `<div class="avatar">${avatarEmoji}</div>
+            <div class="bubble" ${role === 'ai' ? 'style="padding:14px 18px"' : ''}>${content}</div>`;
     }
 
-    function handleKey(e) {
-        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+    return div;
+}
+
+function buildSections(data) {
+    const defs = [
+        { key: 'category', cls: 'section-category', icon: '📁', label: 'Legal Category' },
+        { key: 'laws',     cls: 'section-laws',     icon: '📜', label: 'Applicable Laws' },
+        { key: 'illegal',  cls: 'section-illegal',  icon: '⚖️', label: 'Is This Illegal?' },
+        { key: 'rights',   cls: 'section-rights',   icon: '🛡️', label: 'Your Legal Rights' },
+        { key: 'action',   cls: 'section-action',   icon: '✅', label: 'What You Should Do' },
+    ];
+
+    return defs.map(d => {
+        if (!data[d.key]) return '';
+        const val = data[d.key];
+        const isArr = Array.isArray(val);
+        const items = isArr ? val : [val];
+        const listHTML = `<ul class="s-list">${items.map(i => `<li>${i}</li>`).join('')}</ul>`;
+
+        return `<div class="ai-section ${d.cls}">
+            <div class="section-header">
+                <div class="section-icon">${d.icon}</div>
+                <div class="section-label">${d.label}</div>
+            </div>
+            ${listHTML}
+        </div>`;
+    }).join('');
+}
+
+function showTyping() {
+    const d = document.createElement('div');
+    d.className = 'msg ai';
+    d.id = 'typing';
+    d.innerHTML = `<div class="avatar">⚖️</div>
+        <div class="bubble"><div class="typing"><span></span><span></span><span></span></div></div>`;
+    chat.appendChild(d);
+    chat.scrollTop = chat.scrollHeight;
+}
+
+function removeTyping() {
+    const t = document.getElementById('typing');
+    if (t) t.remove();
+}
+
+/* Parse free-text fallback into sections */
+function parseReply(text) {
+    // Try JSON first
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+        try { return JSON.parse(jsonMatch[0]); } catch(e) {}
     }
 
-    function quickAsk(el) {
-        input.value = el.textContent.replace(/[🏠📋🛒⚠️💼📄]/gu, '').trim();
-        autoResize(input);
-        sendMessage();
-    }
+    // Regex-based fallback parse
+    const obj = {};
+    const sectionMap = [
+        { re: /📁\s*Legal Category[:\s]+(.+?)(?=\n[📜❓🛡️✅]|\n\n|$)/si, key: 'category' },
+        { re: /📜\s*Applicable Laws[:\s]+([\s\S]+?)(?=\n[📁❓🛡️✅]|\n\n|$)/si, key: 'laws' },
+        { re: /[❓⚖️]\s*Is this illegal\?[:\s]+(.+?)(?=\n[📁📜🛡️✅]|\n\n|$)/si, key: 'illegal' },
+        { re: /🛡️\s*Your Rights[:\s]+([\s\S]+?)(?=\n[📁📜❓✅]|\n\n|$)/si, key: 'rights' },
+        { re: /✅\s*What you should do[:\s]+([\s\S]+?)(?=\n[📁📜❓🛡️]|\n\n|$)/si, key: 'action' },
+    ];
 
-    function appendMsg(role, html) {
-        const avatarEmoji = role === 'user' ? '👤' : '⚖️';
-        const div = document.createElement('div');
-        div.className = `msg ${role}`;
-        div.innerHTML = `
-            <div class="avatar">${avatarEmoji}</div>
-            <div class="bubble">${html}</div>`;
-        chat.appendChild(div);
-        chat.scrollTop = chat.scrollHeight;
-        return div;
-    }
-
-    function showTyping() {
-        const d = document.createElement('div');
-        d.className = 'msg ai';
-        d.id = 'typing';
-        d.innerHTML = `<div class="avatar">⚖️</div>
-            <div class="bubble"><div class="typing"><span></span><span></span><span></span></div></div>`;
-        chat.appendChild(d);
-        chat.scrollTop = chat.scrollHeight;
-    }
-
-    function removeTyping() {
-        const t = document.getElementById('typing');
-        if (t) t.remove();
-    }
-
-    /* Format AI response into readable bullet sections */
-    function formatReply(text) {
-        const lines = text.split('\n');
-        let html = '';
-        let inSection = false;
-
-        // Section header pattern: starts with an emoji followed by text and a colon
-        const sectionRe = /^([📁📜❓🛡️✅])\s*(.+?):\s*$/u;
-        // Bullet line: starts with - or • or *
-        const bulletRe  = /^[\-•*]\s+(.+)/;
-
-        for (const raw of lines) {
-            const line = raw.trim();
-            if (!line) continue;
-
-            const secMatch    = line.match(sectionRe);
-            const bulletMatch = line.match(bulletRe);
-
-            if (secMatch) {
-                if (inSection) html += '</ul></div>';
-                html += `<div class="section-block">
-                    <div class="label">${secMatch[1]} ${secMatch[2]}</div>
-                    <ul class="bullet-list">`;
-                inSection = true;
-            } else if (bulletMatch && inSection) {
-                html += `<li>${bulletMatch[1]}</li>`;
-            } else if (line.match(/^[\-•*]\s+/)) {
-                // bullet outside a section
-                if (!inSection) { html += '<ul class="bullet-list">'; inSection = false; }
-                html += `<li>${line.replace(/^[\-•*]\s+/, '')}</li>`;
-            } else {
-                if (inSection) { html += '</ul></div>'; inSection = false; }
-                html += `<p style="margin:6px 0;color:var(--muted);font-size:.85rem">${line}</p>`;
-            }
+    sectionMap.forEach(({ re, key }) => {
+        const m = text.match(re);
+        if (m) {
+            const block = m[1].trim();
+            const bullets = block.match(/[-•*▸]\s+.+/g);
+            obj[key] = bullets ? bullets.map(b => b.replace(/^[-•*▸]\s+/, '')) : [block];
         }
+    });
 
-        if (inSection) html += '</ul></div>';
+    return Object.keys(obj).length ? obj : null;
+}
 
-        // Fallback
-        if (!html) html = text.replace(/\n/g,'<br>');
-        return html;
-    }
+async function sendMessage() {
+    const msg = input.value.trim();
+    if (!msg) return;
 
-    async function sendMessage() {
-        const msg = input.value.trim();
-        if (!msg) return;
+    const wc = document.getElementById('welcomeCard');
+    if (wc) wc.remove();
 
-        // Hide welcome card
-        const wc = document.getElementById('welcomeCard');
-        if (wc) wc.remove();
+    appendMsg('user', msg.replace(/</g, '&lt;').replace(/>/g, '&gt;'));
+    input.value = '';
+    autoResize(input);
+    sendBtn.disabled = true;
+    showTyping();
 
-        appendMsg('user', msg.replace(/</g, '&lt;').replace(/>/g, '&gt;'));
-        input.value = '';
-        autoResize(input);
-        sendBtn.disabled = true;
-        showTyping();
+    try {
+        const res  = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: msg })
+        });
+        const data = await res.json();
+        removeTyping();
 
-        try {
-            const res  = await fetch('/api/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: msg })
-            });
-            const data = await res.json();
-            removeTyping();
-            appendMsg('ai', formatReply(data.reply || 'No response received.'));
-        } catch (err) {
-            removeTyping();
-            appendMsg('ai', '⚠️ Could not connect to the server. Please try again.');
-        } finally {
-            sendBtn.disabled = false;
-            input.focus();
+        const reply = data.reply || 'No response received.';
+        const parsed = parseReply(reply);
+
+        if (parsed && Object.keys(parsed).length) {
+            appendMsg('ai', parsed);
+        } else {
+            // Plain text fallback
+            const html = reply.replace(/\n/g, '<br>');
+            appendMsg('ai', html);
         }
+    } catch (err) {
+        removeTyping();
+        const errDiv = document.createElement('div');
+        errDiv.className = 'msg ai';
+        errDiv.innerHTML = `<div class="avatar">⚖️</div>
+            <div class="bubble" style="padding:14px 18px">⚠️ Could not connect to the server. Please try again.</div>`;
+        chat.appendChild(errDiv);
+    } finally {
+        sendBtn.disabled = false;
+        input.focus();
     }
+}
+
+/* ═══════════════════════════════════════
+   LAW LIBRARY DATA
+═══════════════════════════════════════ */
+const LAWS = [
+    {
+        id: 'constitution',
+        category: 'constitutional',
+        icon: '🇮🇳',
+        iconBg: 'rgba(245,200,66,0.15)',
+        title: 'Indian Constitution',
+        subtitle: 'Supreme law of India • 1950',
+        sections: [
+            { num: 'Art. 12–35', desc: 'Fundamental Rights — equality, freedom, religion, education' },
+            { num: 'Art. 36–51', desc: 'Directive Principles of State Policy' },
+            { num: 'Art. 51A', desc: 'Fundamental Duties of citizens' },
+            { num: 'Art. 14', desc: 'Right to Equality before law' },
+            { num: 'Art. 19', desc: 'Right to freedom of speech, assembly, movement' },
+            { num: 'Art. 21', desc: 'Right to life and personal liberty' },
+            { num: 'Art. 21A', desc: 'Right to free and compulsory education' },
+            { num: 'Art. 22', desc: 'Protection against arrest and detention' },
+            { num: 'Art. 32', desc: 'Right to constitutional remedies (writ)' },
+            { num: 'Art. 226', desc: 'High Court writ jurisdiction' },
+            { num: 'Art. 300A', desc: 'Right to property' },
+        ]
+    },
+    {
+        id: 'ipc',
+        category: 'criminal',
+        icon: '⚖️',
+        iconBg: 'rgba(248,113,113,0.12)',
+        title: 'Indian Penal Code (IPC) / BNS',
+        subtitle: 'Criminal law • Now Bharatiya Nyaya Sanhita 2023',
+        sections: [
+            { num: 'BNS 101', desc: 'Murder — death or life imprisonment' },
+            { num: 'BNS 109', desc: 'Attempt to murder' },
+            { num: 'BNS 115', desc: 'Voluntary causing grievous hurt' },
+            { num: 'BNS 140', desc: 'Assault or criminal force' },
+            { num: 'BNS 303', desc: 'Theft — up to 3 years imprisonment' },
+            { num: 'BNS 308', desc: 'Extortion' },
+            { num: 'BNS 316', desc: 'Criminal breach of trust' },
+            { num: 'BNS 318', desc: 'Cheating and fraud' },
+            { num: 'BNS 324', desc: 'Mischief — damage to property' },
+            { num: 'BNS 351', desc: 'Criminal intimidation / threatening' },
+            { num: 'BNS 74', desc: 'Sexual harassment' },
+            { num: 'BNS 64', desc: 'Rape — minimum 10 years' },
+        ]
+    },
+    {
+        id: 'crpc',
+        category: 'criminal',
+        icon: '🔍',
+        iconBg: 'rgba(108,99,255,0.12)',
+        title: 'CrPC / BNSS 2023',
+        subtitle: 'Code of Criminal Procedure • Bharatiya Nagarik Suraksha Sanhita',
+        sections: [
+            { num: 'BNSS 173', desc: 'FIR — First Information Report filing procedure' },
+            { num: 'BNSS 187', desc: 'Arrest without warrant conditions' },
+            { num: 'BNSS 58', desc: 'Rights of arrested person' },
+            { num: 'BNSS 241', desc: 'Bail in bailable offences' },
+            { num: 'BNSS 480', desc: 'Anticipatory bail application' },
+            { num: 'BNSS 528', desc: 'Revision of lower court orders' },
+            { num: 'BNSS 532', desc: 'Transfer of cases' },
+            { num: 'BNSS 360', desc: 'Zero FIR — can be filed at any police station' },
+        ]
+    },
+    {
+        id: 'motor',
+        category: 'traffic',
+        icon: '🚗',
+        iconBg: 'rgba(56,189,248,0.1)',
+        title: 'Motor Vehicles Act 1988',
+        subtitle: 'Traffic & road safety laws',
+        sections: [
+            { num: 'Sec 3', desc: 'Driving licence requirement' },
+            { num: 'Sec 112', desc: 'Speed limits on public roads' },
+            { num: 'Sec 119', desc: 'Driving under influence (DUI) — fine + imprisonment' },
+            { num: 'Sec 122', desc: 'Reckless / dangerous driving' },
+            { num: 'Sec 129', desc: 'Helmet mandatory for two-wheelers' },
+            { num: 'Sec 134', desc: 'Duty of driver in case of accident' },
+            { num: 'Sec 140', desc: 'No-fault liability compensation' },
+            { num: 'Sec 163A', desc: 'Structured formula for accident compensation' },
+            { num: 'Sec 177', desc: 'General penalties for violations' },
+            { num: 'Sec 184', desc: 'Dangerous driving punishment — up to 1 year' },
+        ]
+    },
+    {
+        id: 'consumer',
+        category: 'consumer',
+        icon: '🛒',
+        iconBg: 'rgba(74,222,128,0.1)',
+        title: 'Consumer Protection Act 2019',
+        subtitle: 'Consumer rights & redressal',
+        sections: [
+            { num: 'Sec 2', desc: 'Definition of consumer, defect, deficiency' },
+            { num: 'Sec 6', desc: 'Consumer rights — safety, information, choice' },
+            { num: 'Sec 17', desc: 'Consumer Disputes Redressal Commissions' },
+            { num: 'Sec 28', desc: 'Filing complaint at District Commission' },
+            { num: 'Sec 34', desc: 'Jurisdiction — District: up to ₹1 crore' },
+            { num: 'Sec 47', desc: 'State Commission — ₹1cr to ₹10cr' },
+            { num: 'Sec 58', desc: 'National Commission — above ₹10cr' },
+            { num: 'Sec 86', desc: 'Unfair trade practices — penalty' },
+            { num: 'Sec 88', desc: 'Product liability for defective goods' },
+        ]
+    },
+    {
+        id: 'it-act',
+        category: 'cyber',
+        icon: '💻',
+        iconBg: 'rgba(167,139,250,0.12)',
+        title: 'IT Act 2000 & IT Amendment 2008',
+        subtitle: 'Cyber crime & data protection',
+        sections: [
+            { num: 'Sec 43', desc: 'Unauthorized access / damage to computer systems' },
+            { num: 'Sec 65', desc: 'Tampering with computer source code' },
+            { num: 'Sec 66', desc: 'Computer-related offences — 3 years' },
+            { num: 'Sec 66A', desc: 'Offensive online messages (struck down by SC)' },
+            { num: 'Sec 66B', desc: 'Dishonestly receiving stolen computer resource' },
+            { num: 'Sec 66C', desc: 'Identity theft' },
+            { num: 'Sec 66D', desc: 'Cheating by impersonation online' },
+            { num: 'Sec 66E', desc: 'Violation of privacy / voyeurism' },
+            { num: 'Sec 67', desc: 'Publishing obscene material online' },
+            { num: 'Sec 72', desc: 'Breach of confidentiality of personal data' },
+        ]
+    },
+    {
+        id: 'labour',
+        category: 'labour',
+        icon: '👷',
+        iconBg: 'rgba(251,146,60,0.12)',
+        title: 'Labour Laws (Code on Wages 2019)',
+        subtitle: 'Workers rights & employment',
+        sections: [
+            { num: 'CoW Sec 3', desc: 'Minimum wages for scheduled employment' },
+            { num: 'CoW Sec 13', desc: 'Overtime wage — double the normal rate' },
+            { num: 'CoW Sec 16', desc: 'Prohibition of gender discrimination in wages' },
+            { num: 'CoW Sec 26', desc: 'Employer cannot deduct from wages except permitted' },
+            { num: 'IESO Sec 3', desc: 'Standing orders — factory/industrial employment' },
+            { num: 'PF Act Sec 6', desc: 'Provident fund contributions — 12% of wages' },
+            { num: 'Gratuity Sec 4', desc: 'Gratuity after 5 years service — 15 days per year' },
+            { num: 'MB Act 1961', desc: 'Maternity benefit — 26 weeks paid leave' },
+            { num: 'POSH 2013', desc: 'Prevention of sexual harassment at workplace' },
+        ]
+    },
+    {
+        id: 'rte',
+        category: 'civil',
+        icon: '📚',
+        iconBg: 'rgba(74,222,128,0.1)',
+        title: 'Right to Education Act 2009',
+        subtitle: 'Free education for ages 6–14',
+        sections: [
+            { num: 'Sec 3', desc: 'Free and compulsory education for children 6–14' },
+            { num: 'Sec 6', desc: 'Neighbourhood school within 1 km for primary' },
+            { num: 'Sec 12(1)(c)', desc: '25% seats reserved in private schools for poor' },
+            { num: 'Sec 17', desc: 'No physical punishment or mental harassment' },
+            { num: 'Sec 23', desc: 'Qualification for teachers' },
+            { num: 'Sec 29', desc: 'Curriculum for holistic development' },
+        ]
+    },
+    {
+        id: 'rti',
+        category: 'civil',
+        icon: '📄',
+        iconBg: 'rgba(108,99,255,0.12)',
+        title: 'Right to Information Act 2005',
+        subtitle: 'Access to government records',
+        sections: [
+            { num: 'Sec 2(f)', desc: 'Definition of "information" — any form of record' },
+            { num: 'Sec 3', desc: 'Every citizen has right to information' },
+            { num: 'Sec 6', desc: 'RTI application — ₹10 application fee' },
+            { num: 'Sec 7', desc: 'Response within 30 days (48hrs for life/liberty)' },
+            { num: 'Sec 8', desc: 'Exempt information — national security, cabinet notes' },
+            { num: 'Sec 11', desc: 'Third party information procedure' },
+            { num: 'Sec 18', desc: 'Powers of Information Commission' },
+            { num: 'Sec 20', desc: 'Penalty — ₹250/day for delay, max ₹25,000' },
+        ]
+    },
+    {
+        id: 'dv-act',
+        category: 'criminal',
+        icon: '🏠',
+        iconBg: 'rgba(248,113,113,0.12)',
+        title: 'Domestic Violence Act 2005',
+        subtitle: 'Protection of women in households',
+        sections: [
+            { num: 'Sec 3', desc: 'Definition of domestic violence — physical, emotional, economic, sexual' },
+            { num: 'Sec 5', desc: 'Duties of police, service providers' },
+            { num: 'Sec 12', desc: 'Application for protection order' },
+            { num: 'Sec 18', desc: 'Protection order — prevents contact, entry' },
+            { num: 'Sec 19', desc: 'Residence order — cannot be evicted from matrimonial home' },
+            { num: 'Sec 20', desc: 'Monetary relief for maintenance' },
+            { num: 'Sec 22', desc: 'Compensation for injuries' },
+        ]
+    },
+    {
+        id: 'iea',
+        category: 'civil',
+        icon: '📜',
+        iconBg: 'rgba(245,200,66,0.12)',
+        title: 'Indian Evidence Act / BSA 2023',
+        subtitle: 'Evidence rules in courts — Bharatiya Sakshya Adhiniyam',
+        sections: [
+            { num: 'BSA Sec 2', desc: 'Facts in issue and relevant facts' },
+            { num: 'BSA Sec 23', desc: 'Admissions — statements against own interest' },
+            { num: 'BSA Sec 36', desc: 'Confessions to police — not admissible' },
+            { num: 'BSA Sec 39', desc: 'FIR as evidence' },
+            { num: 'BSA Sec 57', desc: 'Electronic records — admissibility' },
+            { num: 'BSA Sec 63', desc: 'Burden of proof — prosecution must prove' },
+            { num: 'BSA Sec 107', desc: 'Estoppel — cannot deny previous representation' },
+        ]
+    },
+    {
+        id: 'transfer-property',
+        category: 'property',
+        icon: '🏗️',
+        iconBg: 'rgba(56,189,248,0.1)',
+        title: 'Transfer of Property Act 1882',
+        subtitle: 'Property ownership & transactions',
+        sections: [
+            { num: 'Sec 5', desc: 'Transfer of property — defined' },
+            { num: 'Sec 17', desc: 'Conditions making transaction void' },
+            { num: 'Sec 54', desc: 'Sale of immovable property — registration required' },
+            { num: 'Sec 58', desc: 'Mortgage types — simple, usufructuary' },
+            { num: 'Sec 105', desc: 'Lease — rights and duties of lessor and lessee' },
+            { num: 'Sec 118', desc: 'Exchange of property rights' },
+            { num: 'Sec 122', desc: 'Gift — voluntary transfer without consideration' },
+            { num: 'Sec 127', desc: 'Onerous gift — must take with burden' },
+        ]
+    },
+    {
+        id: 'registration-act',
+        category: 'property',
+        icon: '📋',
+        iconBg: 'rgba(167,139,250,0.12)',
+        title: 'Registration Act 1908',
+        subtitle: 'Mandatory document registration',
+        sections: [
+            { num: 'Sec 17', desc: 'Compulsory registration — sale deeds, mortgages, leases >1yr' },
+            { num: 'Sec 18', desc: 'Optional registration — wills, powers of attorney' },
+            { num: 'Sec 23', desc: 'Time limit — registration within 4 months' },
+            { num: 'Sec 49', desc: 'Unregistered documents — not admissible as evidence' },
+        ]
+    },
+    {
+        id: 'ndps',
+        category: 'criminal',
+        icon: '🚫',
+        iconBg: 'rgba(248,113,113,0.12)',
+        title: 'NDPS Act 1985',
+        subtitle: 'Narcotic Drugs & Psychotropic Substances',
+        sections: [
+            { num: 'Sec 8', desc: 'Prohibition on production, manufacture, sale of drugs' },
+            { num: 'Sec 20', desc: 'Cannabis offences — 6 months to 20 years' },
+            { num: 'Sec 21', desc: 'Manufactured drugs — 10 years to life' },
+            { num: 'Sec 27', desc: 'Personal use — up to 6 months / 1 year' },
+            { num: 'Sec 31', desc: 'Second offence — double the punishment' },
+            { num: 'Sec 36A', desc: 'Special courts for NDPS cases' },
+        ]
+    },
+    {
+        id: 'env',
+        category: 'civil',
+        icon: '🌿',
+        iconBg: 'rgba(74,222,128,0.1)',
+        title: 'Environmental Laws',
+        subtitle: 'Pollution & environment protection',
+        sections: [
+            { num: 'EPA 1986 Sec 5', desc: 'Directions to stop pollution-causing activity' },
+            { num: 'EPA 1986 Sec 15', desc: 'Penalty for violation — 5 years + fine' },
+            { num: 'Air Act Sec 21', desc: 'Consent required before operating polluting industry' },
+            { num: 'Water Act Sec 24', desc: 'Prohibition on polluting water bodies' },
+            { num: 'NGT Act Sec 14', desc: 'NGT jurisdiction — environmental disputes' },
+            { num: 'Wildlife Sec 9', desc: 'Hunting protected animals — 3–7 years' },
+        ]
+    },
+];
+
+let currentCategory = 'all';
+let currentSearch   = '';
+
+function renderLawGrid() {
+    const grid = document.getElementById('lawGrid');
+    const filtered = LAWS.filter(law => {
+        const matchCat = currentCategory === 'all' || law.category === currentCategory;
+        const q = currentSearch.toLowerCase();
+        const matchSearch = !q
+            || law.title.toLowerCase().includes(q)
+            || law.subtitle.toLowerCase().includes(q)
+            || law.sections.some(s => s.desc.toLowerCase().includes(q) || s.num.toLowerCase().includes(q));
+        return matchCat && matchSearch;
+    });
+
+    grid.innerHTML = filtered.map((law, i) => `
+        <div class="law-card" id="lawcard-${law.id}" style="animation-delay:${i * 0.05}s" onclick="toggleLawCard('${law.id}')">
+            <div class="law-card-header">
+                <div class="law-card-icon" style="background:${law.iconBg}">${law.icon}</div>
+                <div>
+                    <div class="law-card-title">${law.title}</div>
+                    <div class="law-card-subtitle">${law.subtitle}</div>
+                </div>
+                <div class="law-card-toggle">▾</div>
+            </div>
+            <div class="law-card-body">
+                <ul class="law-sections-list">
+                    ${law.sections.map(s => `
+                        <li>
+                            <span class="law-section-num" style="background:${law.iconBg};color:var(--text)">${s.num}</span>
+                            <span>${s.desc}</span>
+                        </li>`).join('')}
+                </ul>
+            </div>
+        </div>`
+    ).join('');
+}
+
+function toggleLawCard(id) {
+    const card = document.getElementById('lawcard-' + id);
+    card.classList.toggle('open');
+}
+
+function filterCategory(cat, btn) {
+    currentCategory = cat;
+    document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderLawGrid();
+}
+
+function filterLaws(val) {
+    currentSearch = val;
+    renderLawGrid();
+}
+
+// Initial render
+renderLawGrid();
 </script>
 </body>
 </html>
