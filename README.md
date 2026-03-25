@@ -113,7 +113,7 @@ messages (
 - 🗑️ Delete conversations
 - 🔄 Click any past chat to reload it
 - ⚡ Auto-titles sessions from the first message
-- 💡 Suggestion chips on the welcome screen
+- 💡 Suggestion chips on the beginning screen
 
 ---
 

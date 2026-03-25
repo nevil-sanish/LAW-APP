@@ -1,0 +1,113 @@
+[33mcommit 74a842191bf9413dc5a9d9dc897c792093b53d5c[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: HARRYSP-DOTCOM <harryshibu111@email.com>
+Date:   Thu Mar 26 00:40:24 2026 +0530
+
+    i have added database to show chat history
+
+[33mcommit 5be0eb52eca17e13afa3bbb3dfb7c2eb83388b43[m
+Merge: 4432adb efb9421
+Author: Nevil Mathew Sanish <105092167+nevil-sanish@users.noreply.github.com>
+Date:   Wed Mar 25 23:54:18 2026 +0530
+
+    Merge pull request #1 from ashincoder/updates
+    
+    Updates
+
+[33mcommit efb9421c08cdcfe3f4818417b739c240805f3948[m
+Author: ashincoder <ashinant15@gmail.com>
+Date:   Wed Mar 25 23:50:34 2026 +0530
+
+    Fixed errors on the server file
+
+[33mcommit a3d9373f908e295c213283ca91290e510a299dc2[m
+Author: ashincoder <ashinant15@gmail.com>
+Date:   Wed Mar 25 23:37:25 2026 +0530
+
+    Added rate limiter and input validation
+
+[33mcommit 9574ad9920545856cdca6d1189aa06ba782c8204[m
+Author: ashincoder <ashinant15@gmail.com>
+Date:   Wed Mar 25 23:33:26 2026 +0530
+
+    Removed .env
+
+[33mcommit 4432adbab7445da813295634c58a2af510fff6b6[m
+Author: nevil-sanish <nevilsanish@gmail.com>
+Date:   Wed Mar 25 16:26:44 2026 +0530
+
+    ui and some improvements
+
+[33mcommit 6916596ac2621c50d77bb349864fb627d17502ec[m
+Author: Nevil Mathew Sanish <105092167+nevil-sanish@users.noreply.github.com>
+Date:   Wed Mar 25 15:55:14 2026 +0530
+
+    Add README for LexAI project
+    
+    Added a README file for LexAI, detailing its features, tech stack, and purpose as an AI-powered legal assistant focused on Indian law.
+
+[33mcommit 430dd2d44d0cc715be26ea25600ec2b356708925[m
+Author: Nevil Mathew Sanish <105092167+nevil-sanish@users.noreply.github.com>
+Date:   Wed Mar 25 10:30:12 2026 +0530
+
+    Remove GEMINI_API_KEY from .env file
+
+[33mcommit 970e24cd854caa56b285c25fe14903ea2bd590a8[m
+Author: nevil-sanish <nevilsanish@gmail.com>
+Date:   Wed Mar 25 10:23:33 2026 +0530
+
+    server js changed
+
+[33mcommit 3fe1b930966055c779204041bc0a83502ca90203[m
+Author: nevil-sanish <nevilsanish@gmail.com>
+Date:   Wed Mar 25 10:19:50 2026 +0530
+
+    server js changed
+
+[33mcommit 37dcae46143124580636b9e3973805827205bc1d[m
+Author: nevil-sanish <nevilsanish@gmail.com>
+Date:   Wed Mar 25 10:11:40 2026 +0530
+
+    final working version
+
+[33mcommit b358d90e25de3a3d33cf0bc5c68d2ae7a7566969[m
+Author: nevil-sanish <nevilsanish@gmail.com>
+Date:   Wed Mar 25 10:01:20 2026 +0530
+
+    fix package name
+
+[33mcommit 8205ac70f80f333e364b4ca70a2ed8e62342d773[m
+Author: nevil-sanish <nevilsanish@gmail.com>
+Date:   Wed Mar 25 09:57:59 2026 +0530
+
+    changes
+
+[33mcommit 34746ca369251a38cfd1eeab89f8c0d2cf4129ea[m
+Merge: 99449fa 6f0b6b0
+Author: nevil-sanish <nevilsanish@gmail.com>
+Date:   Wed Mar 25 09:25:45 2026 +0530
+
+    Merge branch 'main' of https://github.com/nevil-sanish/LAW-APP
+
+[33mcommit 99449fa6a7c8e906c940acb9010feed452907666[m
+Author: nevil-sanish <nevilsanish@gmail.com>
+Date:   Wed Mar 25 09:25:00 2026 +0530
+
+    git ignore
+
+[33mcommit 6f0b6b0d75ec112e0071fd2ccaecb68f78753020[m
+Author: Nevil Mathew Sanish <105092167+nevil-sanish@users.noreply.github.com>
+Date:   Wed Mar 25 09:24:23 2026 +0530
+
+    Remove GEMINI_API_KEY from .env file
+
+[33mcommit 9d617f9cd703b86aba5103f92f58c393b6ce13c8[m
+Author: nevil-sanish <nevilsanish@gmail.com>
+Date:   Wed Mar 25 09:23:41 2026 +0530
+
+    added ignore
+
+[33mcommit 010f8728d16a69971669e9b2861c85dd97f0cf74[m
+Author: nevil-sanish <nevilsanish@gmail.com>
+Date:   Wed Mar 25 09:20:52 2026 +0530
+
+    the first commit
