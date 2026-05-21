@@ -13,15 +13,17 @@ export const TopNav: React.FC<TopNavProps> = ({ title, user, setView }) => {
   const isAdmin = user?.email === ADMIN_EMAIL;
 
   return (
-    <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 sticky top-0 z-40">
-      {/* Spacer for mobile hamburger */}
-      <div className="md:hidden w-10" />
+    <header className="min-h-16 bg-white border-b border-slate-200 flex items-center justify-between gap-3 px-4 md:px-6 sticky top-0 z-40">
+      <div className="min-w-0">
+        <p className="md:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">
+          LegalAssist AI
+        </p>
+        <h1 className="text-base md:text-lg font-bold tracking-tight text-slate-900 font-display truncate">
+          {title}
+        </h1>
+      </div>
 
-      <h1 className="text-lg font-bold tracking-tight text-slate-900 font-display">
-        {title}
-      </h1>
-
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 md:gap-4 pr-12 md:pr-0">
         <div className="relative w-64 hidden lg:block">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
           <input
@@ -31,7 +33,7 @@ export const TopNav: React.FC<TopNavProps> = ({ title, user, setView }) => {
           />
         </div>
 
-        <div className="flex items-center gap-1">
+        <div className="hidden sm:flex items-center gap-1">
           {/* Admin Button — only visible for admin */}
           {isAdmin && setView && (
             <button
@@ -53,7 +55,7 @@ export const TopNav: React.FC<TopNavProps> = ({ title, user, setView }) => {
           </button>
         </div>
 
-        <div className="w-8 h-8 rounded-full overflow-hidden border border-slate-200 ml-2">
+        <div className="w-8 h-8 rounded-full overflow-hidden border border-slate-200 md:ml-2">
           {user?.photoURL ? (
             <img
               src={user.photoURL}

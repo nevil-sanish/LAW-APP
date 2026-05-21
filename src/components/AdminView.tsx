@@ -124,7 +124,7 @@ export const AdminView: React.FC<AdminViewProps> = ({ user }) => {
   };
 
   return (
-    <div className="p-6 md:p-10 max-w-7xl mx-auto space-y-8 h-full overflow-y-auto pb-20">
+    <div className="p-4 sm:p-6 md:p-10 max-w-7xl mx-auto space-y-6 md:space-y-8 h-full overflow-y-auto pb-24 md:pb-20">
       {/* Header */}
       <div className="space-y-2">
         <div className="flex items-center gap-3">
@@ -132,59 +132,59 @@ export const AdminView: React.FC<AdminViewProps> = ({ user }) => {
             <Shield className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-3xl md:text-4xl font-display font-bold">Admin Panel</h1>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold">Admin Panel</h1>
             <p className="text-on-surface-variant text-sm">Review and approve uploaded laws</p>
           </div>
         </div>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white border border-outline-variant rounded-2xl p-5 shadow-sm"
+          className="bg-white border border-outline-variant rounded-xl p-4 md:p-5 shadow-sm"
         >
           <p className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-1">Total</p>
-          <p className="text-3xl font-display font-bold">{stats.total}</p>
+          <p className="text-2xl md:text-3xl font-display font-bold">{stats.total}</p>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.05 }}
-          className="bg-amber-50 border border-amber-200 rounded-2xl p-5 shadow-sm"
+          className="bg-amber-50 border border-amber-200 rounded-xl p-4 md:p-5 shadow-sm"
         >
           <p className="text-xs font-bold text-amber-700 uppercase tracking-widest mb-1">Pending</p>
-          <p className="text-3xl font-display font-bold text-amber-900">{stats.pending}</p>
+          <p className="text-2xl md:text-3xl font-display font-bold text-amber-900">{stats.pending}</p>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-green-50 border border-green-200 rounded-2xl p-5 shadow-sm"
+          className="bg-green-50 border border-green-200 rounded-xl p-4 md:p-5 shadow-sm"
         >
           <p className="text-xs font-bold text-green-700 uppercase tracking-widest mb-1">Approved</p>
-          <p className="text-3xl font-display font-bold text-green-900">{stats.approved}</p>
+          <p className="text-2xl md:text-3xl font-display font-bold text-green-900">{stats.approved}</p>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
-          className="bg-red-50 border border-red-200 rounded-2xl p-5 shadow-sm"
+          className="bg-red-50 border border-red-200 rounded-xl p-4 md:p-5 shadow-sm"
         >
           <p className="text-xs font-bold text-red-700 uppercase tracking-widest mb-1">Rejected</p>
-          <p className="text-3xl font-display font-bold text-red-900">{stats.rejected}</p>
+          <p className="text-2xl md:text-3xl font-display font-bold text-red-900">{stats.rejected}</p>
         </motion.div>
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex items-center gap-2 border-b border-outline-variant pb-4">
+      <div className="flex items-center gap-2 border-b border-outline-variant pb-4 overflow-x-auto">
         <Filter className="w-4 h-4 text-on-surface-variant" />
         {(['all', 'pending', 'approved', 'rejected'] as FilterStatus[]).map((status) => (
           <button
             key={status}
             onClick={() => setFilterStatus(status)}
-            className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${
+            className={`shrink-0 px-4 py-2 rounded-lg text-sm font-bold transition-all ${
               filterStatus === status
                 ? 'bg-slate-900 text-white shadow-md'
                 : 'bg-white text-on-surface-variant hover:bg-slate-100 border border-outline-variant'
@@ -222,7 +222,7 @@ export const AdminView: React.FC<AdminViewProps> = ({ user }) => {
               key={law.id}
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white border border-outline-variant rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition-all"
+              className="bg-white border border-outline-variant rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-all"
             >
               {/* Card Header */}
               <div className="p-5 md:p-6">
@@ -257,7 +257,7 @@ export const AdminView: React.FC<AdminViewProps> = ({ user }) => {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 shrink-0">
+                  <div className="flex w-full md:w-auto flex-wrap items-center gap-2 shrink-0">
                     <button
                       onClick={() => setPreviewLaw(law)}
                       className="p-2.5 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
@@ -270,7 +270,7 @@ export const AdminView: React.FC<AdminViewProps> = ({ user }) => {
                         <button
                           onClick={() => handleApprove(law.id)}
                           disabled={actionLoading === law.id}
-                          className="flex items-center gap-1.5 px-4 py-2.5 bg-green-600 text-white font-bold text-sm rounded-lg hover:bg-green-700 transition-all disabled:opacity-50 shadow-sm"
+                          className="flex flex-1 md:flex-none items-center justify-center gap-1.5 px-4 py-2.5 bg-green-600 text-white font-bold text-sm rounded-lg hover:bg-green-700 transition-all disabled:opacity-50 shadow-sm"
                         >
                           {actionLoading === law.id ? (
                             <Loader2 className="w-4 h-4 animate-spin" />
@@ -282,7 +282,7 @@ export const AdminView: React.FC<AdminViewProps> = ({ user }) => {
                         <button
                           onClick={() => handleReject(law.id)}
                           disabled={actionLoading === law.id}
-                          className="flex items-center gap-1.5 px-4 py-2.5 bg-red-600 text-white font-bold text-sm rounded-lg hover:bg-red-700 transition-all disabled:opacity-50 shadow-sm"
+                          className="flex flex-1 md:flex-none items-center justify-center gap-1.5 px-4 py-2.5 bg-red-600 text-white font-bold text-sm rounded-lg hover:bg-red-700 transition-all disabled:opacity-50 shadow-sm"
                         >
                           <XCircle className="w-4 h-4" />
                           Reject
@@ -349,9 +349,9 @@ export const AdminView: React.FC<AdminViewProps> = ({ user }) => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="fixed inset-4 md:inset-16 bg-white rounded-2xl shadow-2xl z-[101] flex flex-col overflow-hidden"
+              className="fixed inset-3 md:inset-16 bg-white rounded-xl shadow-2xl z-[101] flex flex-col overflow-hidden"
             >
-              <div className="flex items-center justify-between p-6 border-b border-slate-200">
+              <div className="flex items-center justify-between gap-3 p-4 md:p-6 border-b border-slate-200">
                 <div className="flex items-center gap-3 min-w-0">
                   <h2 className="text-xl font-display font-bold truncate">{previewLaw.title}</h2>
                   {getStatusBadge(previewLaw.status)}
@@ -390,13 +390,13 @@ export const AdminView: React.FC<AdminViewProps> = ({ user }) => {
                 </pre>
               </div>
               {previewLaw.status === 'pending' && (
-                <div className="p-4 border-t border-slate-200 flex justify-end gap-3">
+                <div className="p-4 border-t border-slate-200 flex flex-col sm:flex-row sm:justify-end gap-3">
                   <button
                     onClick={() => {
                       handleReject(previewLaw.id);
                       setPreviewLaw(null);
                     }}
-                    className="flex items-center gap-1.5 px-5 py-2.5 bg-red-600 text-white font-bold text-sm rounded-lg hover:bg-red-700 transition-all"
+                    className="flex items-center justify-center gap-1.5 px-5 py-2.5 bg-red-600 text-white font-bold text-sm rounded-lg hover:bg-red-700 transition-all"
                   >
                     <XCircle className="w-4 h-4" /> Reject
                   </button>
@@ -405,7 +405,7 @@ export const AdminView: React.FC<AdminViewProps> = ({ user }) => {
                       handleApprove(previewLaw.id);
                       setPreviewLaw(null);
                     }}
-                    className="flex items-center gap-1.5 px-5 py-2.5 bg-green-600 text-white font-bold text-sm rounded-lg hover:bg-green-700 transition-all"
+                    className="flex items-center justify-center gap-1.5 px-5 py-2.5 bg-green-600 text-white font-bold text-sm rounded-lg hover:bg-green-700 transition-all"
                   >
                     <CheckCircle className="w-4 h-4" /> Approve
                   </button>

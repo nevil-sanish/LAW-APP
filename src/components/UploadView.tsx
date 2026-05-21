@@ -432,11 +432,11 @@ export const UploadView: React.FC<UploadViewProps> = ({ user }) => {
   const isProcessing = uploadStep === 'reading' || uploadStep === 'verifying' || uploadStep === 'submitting';
 
   return (
-    <div className="p-6 md:p-10 max-w-7xl mx-auto space-y-8 h-full overflow-y-auto pb-20">
+    <div className="p-4 sm:p-6 md:p-10 max-w-7xl mx-auto space-y-6 md:space-y-8 h-full overflow-y-auto pb-24 md:pb-20">
       {/* Header */}
       <div className="space-y-2">
-        <h1 className="text-3xl md:text-4xl font-display font-bold">Upload Law</h1>
-        <p className="text-on-surface-variant max-w-2xl text-base md:text-lg">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold">Upload Law</h1>
+        <p className="text-on-surface-variant max-w-2xl text-sm sm:text-base md:text-lg">
           Upload Indian law texts or PDFs, including scanned PDFs with OCR fallback. Each upload is <strong>verified by AI (Groq)</strong> and then submitted for admin approval. Approved laws appear in the global Study section.
         </p>
       </div>
@@ -445,7 +445,7 @@ export const UploadView: React.FC<UploadViewProps> = ({ user }) => {
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-2xl p-6"
+        className="bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl p-4 sm:p-6"
       >
         <div className="flex items-start gap-3">
           <BrainCircuit className="w-6 h-6 text-indigo-600 shrink-0 mt-0.5" />
@@ -454,7 +454,7 @@ export const UploadView: React.FC<UploadViewProps> = ({ user }) => {
             <p className="text-sm text-indigo-700 mt-1">
               Your uploaded law is automatically verified using <strong>Groq AI</strong>. The app extracts text directly from standard PDFs and uses OCR for scanned PDFs, then the AI checks if the document is a legitimate Indian law, categorizes it, and extracts key sections. Once verified, it goes to the admin for final approval.
             </p>
-            <div className="flex items-center gap-6 mt-3 text-xs font-bold text-indigo-600">
+            <div className="flex items-center gap-3 sm:gap-6 mt-3 overflow-x-auto pb-1 text-xs font-bold text-indigo-600">
               <span className="flex items-center gap-1.5">
                 <span className="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center text-[10px]">1</span>
                 Upload
@@ -530,14 +530,14 @@ export const UploadView: React.FC<UploadViewProps> = ({ user }) => {
       {/* Upload Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* File Upload */}
-        <div className="bg-white rounded-2xl border border-outline-variant p-6 md:p-8 flex flex-col shadow-sm">
+          <div className="bg-white rounded-xl border border-outline-variant p-5 md:p-8 flex flex-col shadow-sm">
           <div className="flex items-center gap-3 mb-6">
             <Upload className="w-7 h-7 text-black" />
             <h2 className="text-xl md:text-2xl font-display font-bold">Upload Files</h2>
           </div>
           <div
             onClick={() => !isProcessing && fileInputRef.current?.click()}
-            className={`flex-1 border-2 border-dashed border-outline-variant rounded-2xl flex flex-col items-center justify-center p-8 md:p-12 bg-surface-container-low hover:bg-surface-container transition-all group ${
+            className={`flex-1 border-2 border-dashed border-outline-variant rounded-xl flex flex-col items-center justify-center p-6 md:p-12 bg-surface-container-low hover:bg-surface-container transition-all group ${
               isProcessing ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'
             }`}
           >
@@ -570,7 +570,7 @@ export const UploadView: React.FC<UploadViewProps> = ({ user }) => {
         </div>
 
         {/* Paste Text */}
-        <div className="bg-white rounded-2xl border border-outline-variant p-6 md:p-8 flex flex-col shadow-sm">
+          <div className="bg-white rounded-xl border border-outline-variant p-5 md:p-8 flex flex-col shadow-sm">
           <div className="flex items-center gap-3 mb-6">
             <FileText className="w-7 h-7 text-black" />
             <h2 className="text-xl md:text-2xl font-display font-bold">Paste Law Text</h2>
@@ -579,7 +579,7 @@ export const UploadView: React.FC<UploadViewProps> = ({ user }) => {
             <textarea
               value={pasteText}
               onChange={(e) => setPasteText(e.target.value)}
-              className="flex-1 w-full border border-outline rounded-2xl p-4 md:p-6 font-sans text-sm outline-none focus:ring-2 focus:ring-black/5 resize-none placeholder:text-slate-400 min-h-[200px]"
+              className="flex-1 w-full border border-outline rounded-xl p-4 md:p-6 font-sans text-sm outline-none focus:ring-2 focus:ring-black/5 resize-none placeholder:text-slate-400 min-h-[200px]"
               placeholder="Paste the full text of an Indian law, statute, act, or legal provision here..."
               disabled={isProcessing}
             />
@@ -590,7 +590,7 @@ export const UploadView: React.FC<UploadViewProps> = ({ user }) => {
               <button
                 onClick={handlePasteAnalyze}
                 disabled={isProcessing || !pasteText.trim()}
-                className="bg-black text-white font-bold py-3 px-6 md:px-8 rounded-lg hover:bg-slate-800 transition-all flex items-center gap-2 shadow-lg disabled:opacity-30 disabled:cursor-not-allowed"
+                className="w-full sm:w-auto justify-center bg-black text-white font-bold py-3 px-6 md:px-8 rounded-lg hover:bg-slate-800 transition-all flex items-center gap-2 shadow-lg disabled:opacity-30 disabled:cursor-not-allowed"
               >
                 {isProcessing ? (
                   <Loader2 className="w-5 h-5 animate-spin" />
@@ -706,10 +706,10 @@ export const UploadView: React.FC<UploadViewProps> = ({ user }) => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="fixed inset-4 md:inset-16 bg-white rounded-2xl shadow-2xl z-[101] flex flex-col overflow-hidden"
+                className="fixed inset-3 md:inset-16 bg-white rounded-xl shadow-2xl z-[101] flex flex-col overflow-hidden"
             >
-              <div className="flex items-center justify-between p-6 border-b border-slate-200">
-                <div className="flex items-center gap-3">
+              <div className="flex items-center justify-between gap-3 p-4 md:p-6 border-b border-slate-200">
+                <div className="flex items-center gap-3 min-w-0">
                   <h2 className="text-xl font-display font-bold truncate">{previewLaw.title}</h2>
                   {getStatusBadge(previewLaw.status)}
                 </div>

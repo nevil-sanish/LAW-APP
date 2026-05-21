@@ -11,6 +11,7 @@ import {
   X,
   Plus,
   Shield,
+  LifeBuoy,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import type { View, UserProfile } from '../types';
@@ -44,7 +45,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, user, on
   const sidebarContent = (
     <>
       {/* Logo */}
-      <div className="flex items-center gap-3 px-2 py-4 mb-8">
+      <div className="flex items-center gap-3 px-2 py-4 mb-6">
         <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
           <Gavel className="w-6 h-6 text-white" />
         </div>
@@ -55,7 +56,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, user, on
       </div>
 
       {/* New Chat Button */}
-      <div className="px-2 mb-8">
+      <div className="px-2 mb-6">
         <button
           onClick={() => handleNav('chat')}
           className="w-full bg-white text-slate-900 font-semibold text-sm py-3 rounded-lg hover:bg-slate-200 transition-colors flex items-center justify-center gap-2 shadow-sm"
@@ -141,10 +142,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, user, on
         {sidebarContent}
       </nav>
 
-      {/* Mobile Hamburger */}
+      {/* Mobile Utility Drawer Trigger */}
       <button
         onClick={() => setMobileOpen(true)}
-        className="fixed top-4 left-4 z-50 md:hidden p-2 bg-slate-950 text-white rounded-lg shadow-lg"
+        className="fixed top-3 right-3 z-50 md:hidden p-2.5 bg-white text-slate-700 border border-slate-200 rounded-lg shadow-sm"
+        aria-label="Open account menu"
       >
         <Menu className="w-6 h-6" />
       </button>
@@ -178,6 +180,43 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, user, on
           </>
         )}
       </AnimatePresence>
+
+      {/* Mobile Bottom Navigation */}
+      <nav className="fixed inset-x-0 bottom-0 z-50 md:hidden border-t border-slate-200 bg-white/95 px-2 pb-[max(env(safe-area-inset-bottom),0.5rem)] pt-2 shadow-[0_-8px_24px_rgba(15,23,42,0.08)] backdrop-blur">
+        <div
+          className="grid gap-1"
+          style={{ gridTemplateColumns: `repeat(${navItems.length + 1}, minmax(0, 1fr))` }}
+        >
+          {navItems.map((item) => {
+            const active = currentView === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => handleNav(item.id)}
+                className={`flex min-h-[52px] flex-col items-center justify-center gap-1 rounded-lg px-1 text-[11px] font-bold transition-colors ${
+                  active
+                    ? item.id === 'admin'
+                      ? 'bg-amber-50 text-amber-700'
+                      : 'bg-slate-950 text-white'
+                    : item.id === 'admin'
+                    ? 'text-amber-600'
+                    : 'text-slate-500 hover:bg-slate-50'
+                }`}
+              >
+                <item.icon className="h-5 w-5" />
+                <span className="max-w-full truncate">{item.label}</span>
+              </button>
+            );
+          })}
+          <button
+            onClick={() => setMobileOpen(true)}
+            className="flex min-h-[52px] flex-col items-center justify-center gap-1 rounded-lg px-1 text-[11px] font-bold text-slate-500 hover:bg-slate-50"
+          >
+            <LifeBuoy className="h-5 w-5" />
+            <span>Account</span>
+          </button>
+        </div>
+      </nav>
     </>
   );
 };

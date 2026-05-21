@@ -26,24 +26,24 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="flex w-full min-h-screen bg-surface">
+    <div className="flex w-full min-h-[100dvh] bg-surface">
       {/* Left Panel — Login */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-8 lg:p-12 relative overflow-hidden">
-        <div className="absolute top-10 left-10 flex items-center gap-2">
-          <Gavel className="w-8 h-8 text-black" />
-          <span className="font-display font-bold text-xl">LegalAssist AI</span>
+      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center px-5 py-8 sm:p-8 lg:p-12 relative overflow-hidden">
+        <div className="absolute top-5 left-5 sm:top-10 sm:left-10 flex items-center gap-2">
+          <Gavel className="w-7 h-7 sm:w-8 sm:h-8 text-black" />
+          <span className="font-display font-bold text-lg sm:text-xl">LegalAssist AI</span>
         </div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="w-full max-w-[440px] space-y-8"
+          className="w-full max-w-[440px] space-y-7 pt-16 sm:pt-12"
         >
           <div className="space-y-2">
-            <h1 className="text-4xl font-display font-bold text-black lg:text-5xl">
+            <h1 className="text-3xl sm:text-4xl font-display font-bold text-black lg:text-5xl">
               Welcome
             </h1>
-            <p className="text-lg text-on-surface-variant font-sans">
+            <p className="text-base sm:text-lg text-on-surface-variant font-sans">
               Sign in to access your AI-powered legal workspace.
             </p>
           </div>
@@ -52,7 +52,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
             <button
               onClick={handleGoogleSignIn}
               disabled={loading}
-              className="w-full flex items-center justify-center gap-3 bg-white border border-outline-variant hover:bg-surface-container transition-all py-4 px-4 rounded-xl shadow-sm font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-center gap-3 bg-white border border-outline-variant hover:bg-surface-container transition-all py-3.5 sm:py-4 px-4 rounded-xl shadow-sm font-semibold text-base sm:text-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <div className="w-6 h-6 border-2 border-black/20 border-t-black rounded-full animate-spin" />
@@ -84,7 +84,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4 pt-4">
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-2 sm:pt-4">
             <div className="flex flex-col items-center gap-2 text-center">
               <div className="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center">
                 <ShieldCheck className="w-5 h-5 text-on-secondary-container" />

@@ -84,7 +84,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex h-screen bg-surface">
+    <div className="flex h-screen bg-surface overflow-hidden">
       <Sidebar
         currentView={view}
         setView={setView}
@@ -92,10 +92,10 @@ export default function App() {
         onSignOut={handleSignOut}
       />
 
-      <main className="flex-1 md:ml-[280px] h-screen flex flex-col overflow-hidden relative">
+      <main className="flex-1 md:ml-[280px] h-[100dvh] flex flex-col overflow-hidden relative">
         <TopNav title={getTitle()} user={user} setView={setView} />
 
-        <div className="flex-1 overflow-hidden">
+        <div className="flex-1 overflow-hidden pb-16 md:pb-0">
           <AnimatePresence mode="wait">
             <motion.div
               key={view}

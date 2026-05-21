@@ -5,16 +5,18 @@ import type { Message } from './types';
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY || '';
 
-// Model fallback chain (Llama 3 models on Groq)
-const PRIMARY_MODEL = 'llama-3.3-70b-versatile';
-const FALLBACK_MODEL = 'llama-3.1-8b-instant';
+// Model fallback chain — ordered by free-tier throughput
+// llama-3.1-8b-instant  → 30 RPM · 14,400 RPD · 6,000 TPM  (highest daily quota)
+// llama-3.3-70b-versatile → 30 RPM · 1,000 RPD · 12,000 TPM (better quality, lower daily cap)
+const PRIMARY_MODEL = 'llama-3.1-8b-instant';
+const FALLBACK_MODEL = 'llama-3.3-70b-versatile';
 
 // Max conversation history messages to send (keeps token usage low)
 const MAX_HISTORY_MESSAGES = 10;
 
 // Retry configuration
-const MAX_RETRIES = 1;
-const RETRY_DELAY_MS = 1500;
+const MAX_RETRIES = 2;
+const RETRY_DELAY_MS = 1200;
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
