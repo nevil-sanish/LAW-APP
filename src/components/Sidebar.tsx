@@ -6,7 +6,6 @@ import {
   BookOpen,
   HelpCircle,
   User,
-  LogOut,
   Menu,
   X,
   Plus,
@@ -15,16 +14,17 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import type { View, UserProfile } from '../types';
+import { motion, AnimatePresence } from 'motion/react';
+import type { View, UserProfile } from '../types';
 import { ADMIN_EMAIL } from '../types';
 
 interface SidebarProps {
   currentView: View;
   setView: (v: View) => void;
   user: UserProfile | null;
-  onSignOut: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, user, onSignOut }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, user }) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const isAdmin = user?.email === ADMIN_EMAIL;
 
@@ -98,38 +98,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, user, on
         <button className="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800/50 rounded-lg text-sm transition-all">
           <HelpCircle className="w-5 h-5" />
           Support
-        </button>
-
-        {user && (
-          <div className="flex items-center gap-3 px-4 py-3 text-slate-300">
-            {user.photoURL ? (
-              <img
-                src={user.photoURL}
-                alt={user.displayName || 'User'}
-                className="w-6 h-6 rounded-full object-cover"
-              />
-            ) : (
-              <User className="w-5 h-5" />
-            )}
-            <div className="flex flex-col min-w-0 flex-1">
-              <span className="text-sm truncate">
-                {user.displayName || user.email || 'User'}
-              </span>
-              {isAdmin && (
-                <span className="text-[9px] font-black text-amber-400 uppercase tracking-wider">
-                  Administrator
-                </span>
-              )}
-            </div>
-          </div>
-        )}
-
-        <button
-          onClick={onSignOut}
-          className="flex items-center gap-3 px-4 py-3 text-red-400 hover:text-red-300 hover:bg-red-950/30 rounded-lg text-sm transition-all"
-        >
-          <LogOut className="w-5 h-5" />
-          Sign Out
         </button>
       </div>
     </>

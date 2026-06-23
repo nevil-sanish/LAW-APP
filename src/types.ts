@@ -1,4 +1,4 @@
-export type View = 'login' | 'chat' | 'upload' | 'repository' | 'admin';
+export type View = 'chat' | 'upload' | 'repository' | 'admin';
 
 export interface Message {
   id: string;
