@@ -14,6 +14,8 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import type { View, UserProfile } from '../types';
+import { motion, AnimatePresence } from 'motion/react';
+import type { View, UserProfile } from '../types';
 import { ADMIN_EMAIL } from '../types';
 
 interface SidebarProps {
